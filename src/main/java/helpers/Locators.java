@@ -7,9 +7,6 @@ import java.lang.Exception;
 import java.lang.System;
 import java.util.Properties;
 
-/**
- * Created by HP-G62 on 18.01.2015.
- */
 public class Locators {
     private static Properties LOCATORS;
 
@@ -27,91 +24,53 @@ public class Locators {
         }
     }
 
-    public static By get(String elenentName) {
-        return
+    public static By get(String elementName) {
+        String locator = LOCATORS.getProperty(elementName);
+        return getLocator(locator);
     }
 
-    public static By get(String locatorName,)
+    //Темплейт создаетс для однотипных локаторов
+    public static By get(String elementName, String value) {
+        String locator = LOCATORS.getProperty(elementName);
+        return getLocator(String.format(locator, value));
+    }
 
-    public By getLocator(String elementName, String value) {
-        String[] values = LOCATORS.getProperty(elementName).split("=", 2);
-        LocatorType locatorType = new LocatorType.valueOf(values[0]);
+    public static By getLocator(String locator) {
+        String[] locatorItems = locator.split("=", 2);
+        LocatorType locatorType = LocatorType.valueOf(locatorItems[0]);
         switch (locatorType) {
 
             case id: {
-                return By.id(values[1]);
+                return By.id(locatorItems[1]);
             }
 
             case name: {
-                return By.className(values[1]);
+                return By.className(locatorItems[1]);
             }
 
             case css: {
-                return By.cssSelector(values[1]);
+                return By.cssSelector(locatorItems[1]);
             }
 
             case xpath: {
-                return By.xpath(values[1]);
+                return By.xpath(locatorItems[1]);
             }
 
             case tag: {
-                return By.tagName(values[1]);
+                return By.tagName(locatorItems[1]);
             }
 
             case text: {
-                return By.linkText(values[1]);
+                return By.linkText(locatorItems[1]);
             }
 
             case partText: {
-                return By.partialLinkText(values[1]);
+                return By.partialLinkText(locatorItems[1]);
             }
 
             default: {
-                throw new IllegalArgumentException("Type " + values[0] + " is not supported");
+                throw new IllegalArgumentException("Type " + locatorItems[0] + " is not supported");
             }
         }
-    }
-
-
-    private By getLocator(String elementName, String value) {
-        String[] values = LOCATORS.getProperty(elementName).split("=", 2);
-        LocatorType locatorType = new LocatorType.valueOf(values[0]);
-        switch (locatorType) {
-
-            case id: {
-                return By.id(values[1]);
-            }
-
-            case name: {
-                return By.className(values[1]);
-            }
-
-            case css: {
-                return By.cssSelector(values[1]);
-            }
-
-            case xpath: {
-                return By.xpath(values[1]);
-            }
-
-            case tag: {
-                return By.tagName(values[1]);
-            }
-
-            case text: {
-                return By.linkText(values[1]);
-            }
-
-            case partText: {
-                return By.partialLinkText(values[1]);
-            }
-
-            default: {
-                throw new IllegalArgumentException("Type " + values[0] + " is not supported");
-            }
-//Темплейт создаетс для однотипных локаторов
-        }
-
-
     }
 }
