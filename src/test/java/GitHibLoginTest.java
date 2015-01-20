@@ -13,7 +13,6 @@ public class GitHibLoginTest extends TestBase {
 
     @Test
     public void loginTest() {
-
         PageObject page = new PageObject();
         page.login(driver,"nata","mad");
         Assert.assertTrue(driver.findElement(By.className("title")).getText().contains("Welcome to GitHub!"));
