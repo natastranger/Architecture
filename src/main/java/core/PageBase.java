@@ -1,11 +1,6 @@
 package core;
 
-import org.openqa.selenium.WebDriver;
+//for achitecture means is left empty
 
 public class PageBase {
-    protected WebDriver driver;
-
-    public PageBase(WebDriver driver){
-        this.driver = driver;
-    }
 }
